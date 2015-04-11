@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Jquery 技巧</title>
+    
+    <meta name="author" content="holysky5">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap styles -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Sticky Footer -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bs-sticky-footer.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="/assets/themes/bootstrap-3/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jb-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Holysky`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="jb-navbar-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Me</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div class="container">
+        
+<div class="page-header">
+  <h1>Jquery 技巧 <small>jquery</small></h1>
+</div>
+
+<div class="row post-full">
+  <div class="col-xs-12">
+    <div class="date">
+      <span>11 April 2015</span>
+    </div>
+    <div class="content">
+      <h3>自己整理的使用Jquery中常用到得代码段.常看看对自己的编程效率会有很高增长哦.</h3>
+
+<ul>
+<li><p>Jquery中对数组操作的支持</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$.merge(arr1,arr2,...); 
+$.unique(arr1,arr2,...)
+$.inArray(value,array,fromIndex);
+$.map(array,callback);
+$.grep(array,callback) ;
+$.each()
+$( &#39;div&#39; ) .toArray()
+</code></pre></div></li>
+<li><p>嵌套过滤</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">el.filter(&quot;:not(:has(.selected))&quot;) //去掉所有不包含class为.selected的元素
+</code></pre></div></li>
+<li><p>is函数判断(非常有用) 检测当前元素是否符合某个selector</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">el.is(&quot;:hidden&quot;)
+el.is(&quot;[attr]&quot;)
+el.is(&quot;.cls&quot;)
+</code></pre></div></li>
+<li><p>检查selector 元素是否存在</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> $(selector).length
+</code></pre></div></li>
+<li><p>克隆</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$(&#39;#gbin1div&#39;).clone()
+</code></pre></div></li>
+<li><p>判断文件是否加载完全</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$(&#39;#theGBin1Image&#39;).attr(&#39;src&#39;, &#39;image.jpg&#39;).load(function() {
+    alert(&#39;This Image Has Been Loaded&#39;);
+});
+</code></pre></div></li>
+<li><p>jquery 命名事件</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$(&#39;input&#39;).bind(&#39;blur.validation&#39;, function(e){
+    // do what you want here
+});
+</code></pre></div></li>
+<li><p>ajax同步
+    $.when( $.ajax(&#39;test1.html&#39;),$.ajax(&quot;test2.html&quot;))
+          .done(fn).fail(fn)
+          .then(successFunc, failureFunc  ); //then可以成功函数与失败函数写在一起
+          .always(fn)  //不管成功或者失败都执行</p></li>
+<li><p>全局ajax处理
+    $(document).ajaxXXX(); 对ajax进行拦截</p></li>
+<li><p>jquery 绑定数据</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">//The data method also accept namespaces
+$(&#39;input&#39;).data(&#39;validation.isValid&#39;, true);
+</code></pre></div></li>
+<li><p>强制打开新窗口</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$(&#39;a.popup&#39;).live(&#39;click&#39;, function(){
+    newwindow=window.open($(this).attr(&#39;href&#39;),&#39;&#39;,&#39;height=200,width=150&#39;);
+    if (window.focus) {newwindow.focus()}
+    return false;
+});
+
+$(&#39;a.newTab&#39;).live(&#39;click&#39;, function(){
+    newwindow=window.open($(this).href);
+    $(this).target = &quot;_blank&quot;;
+    return false;
+});
+</code></pre></div></li>
+<li><p>url处理</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">//obj -&gt; url
+decodeURIComponent($.param(obj))
+    form -&gt;url
+$(&#39;#form&#39;).serialize()
+form -&gt;array
+$(&#39;form&#39;).serializeArray();
+</code></pre></div></li>
+<li><p>jquery 事件冒泡处理</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$(&quot;#test&quot;).click(function(e){
+    return false; //阻止事件冒泡和默认行为并结束函数
+});
+$(&quot;#test&quot;).click(function(e){ 
+    e.preventDefault(); //阻止浏览器默认行为
+});
+$(&quot;#test&quot;).click(function(e){ 
+    e.stopPropagation();  //阻止事件冒泡
+});
+$(&quot;#test&quot;).click(function(e){ 
+    e.stopImmediatePropagation(); //阻止剩余的事件处理函数执行并且防止事件冒泡到DOM树上。
+});
+</code></pre></div></li>
+<li><p>jquery 复制对象</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">// 浅层复制（只复制顶层的非 object 元素）
+var new Object = jQuery.extend({}, oldObject);
+// 深层复制（一层一层往下复制直到最底层）
+var newObject = jQuery.extend(true, {}, oldObject);
+</code></pre></div></li>
+</ul>
+
+    </div>
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#jquery-ref">
+    		jquery <span>1</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#javascript-ref">javascript <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#jquery-ref">jquery <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#技巧-ref">技巧 <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  
+    <hr>
+    <ul class="pagination">
+    
+      <li class="prev"><a href="/lessons/2011/12/29/jekyll-introduction" title="Jekyll Introduction">&laquo; Previous</a></li>
+    
+      <li><a href="/archive.html">Archive</a></li>
+    
+      <li class="next"><a href="/database/2015/04/11/Oracle%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5" title="Oracle常用语句">Next &raquo;</a></li>
+    
+    </ul>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_developer = 1;
+    var disqus_shortname = 'holysky5'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p>&copy; 2015 holysky5
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </div>
+    </div>
+
+    
+
+
+
+
+    <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/assets/themes/bootstrap-3/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
+

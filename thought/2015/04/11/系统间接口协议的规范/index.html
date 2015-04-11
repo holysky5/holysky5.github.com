@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>HolySky5`s Home</title>
+    <title>系统间接口协议的规范</title>
     
     <meta name="author" content="holysky5">
 
@@ -138,22 +138,116 @@
       <div class="container">
         
 <div class="page-header">
-  <h1>HolySky5`s Home </h1>
+  <h1>系统间接口协议的规范 <small>Program Thought</small></h1>
 </div>
 
-<div class="row">
+<div class="row post-full">
   <div class="col-xs-12">
-    <ul class="posts">
-  
-    <li><span>11 Apr 2015</span> &raquo; <a href="/thought/2015/04/11/%E7%B3%BB%E7%BB%9F%E9%97%B4%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A7%84%E8%8C%83">系统间接口协议的规范</a></li>
-  
-    <li><span>11 Apr 2015</span> &raquo; <a href="/database/2015/04/11/Oracle%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5">Oracle常用语句</a></li>
-  
-    <li><span>11 Apr 2015</span> &raquo; <a href="/jquery/2015/04/11/Jquery%20%E6%8A%80%E5%B7%A7">Jquery 技巧</a></li>
-  
-    <li><span>29 Dec 2011</span> &raquo; <a href="/lessons/2011/12/29/jekyll-introduction">Jekyll Introduction</a></li>
-  
+    <div class="date">
+      <span>11 April 2015</span>
+    </div>
+    <div class="content">
+      <h3>这是一篇关于系统后台接口通信协议上得设计.具体来说是http协议的参考设计.一份好得面向开发人员的协议规范在多系统交互中是非常重要且必要的</h3>
+
+<h4>协议的好坏我觉得主要取决于三个方面</h4>
+
+<ul>
+<li>协议URL的设计.烂的URL使用方式上会让接口人员觉得迷糊.记不住. 类Restful的URL比如/user/blog/add 就是比较好的协议.可以通过URL自解释并且体现了
+系统中得领域对象,并且在系统的开发过程中始终坚持这一原则(很多时候总是因为懒得修改而背叛这一原则).
+
+<ul>
+<li>URL的命名主要遵循大小写统一,使用下划线还是驼峰写法的统一.按照模块划分url需要注意的地方</li>
+</ul></li>
+<li>协议接口的返回值设计
+
+<ul>
+<li>接口的返回值形式是XML还是JSON还是其他.建议是JSON</li>
+<li>返回成功的语义尽量统一始终给予一个成功标志来给客户端检测是否操作成功的code,在调用失败时也要给予调用者错误code和错误消息.很多时候接口编写者不给用户
+错误简明信息.就会导致别人必须参考文档来得到答案.冷冰冰的错误code是不好的.</li>
+</ul></li>
 </ul>
+
+<h5>总的来说在前后端分离的Web项目和接口项目中一些好得接口规范对于开发人员特别是调用者来说是友好的.一个不考虑调用者如何调用的接口设计不用说也是垃圾的.</h5>
+
+    </div>
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#thought-ref">
+    		thought <span>1</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#thought-ref">thought <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Java-ref">Java <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#protocal-ref">protocal <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#interface-ref">interface <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#程序-ref">程序 <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  
+    <hr>
+    <ul class="pagination">
+    
+      <li class="prev"><a href="/database/2015/04/11/Oracle%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5" title="Oracle常用语句">&laquo; Previous</a></li>
+    
+      <li><a href="/archive.html">Archive</a></li>
+    
+      <li class="next disabled"><a>Next &rarr;</a>
+    
+    </ul>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_developer = 1;
+    var disqus_shortname = 'holysky5'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
 
   </div>
 </div>

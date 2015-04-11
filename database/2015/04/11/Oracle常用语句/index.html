@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Oracle常用语句</title>
+    
+    <meta name="author" content="holysky5">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap styles -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Sticky Footer -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bs-sticky-footer.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="/assets/themes/bootstrap-3/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jb-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Holysky`s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="jb-navbar-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Me</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div class="container">
+        
+<div class="page-header">
+  <h1>Oracle常用语句 <small>Oracle</small></h1>
+</div>
+
+<div class="row post-full">
+  <div class="col-xs-12">
+    <div class="date">
+      <span>11 April 2015</span>
+    </div>
+    <div class="content">
+      <h3>oracle 的常用语句备忘</h3>
+
+<h4>oracle 的merge 语法 insert or update or delete with single statement</h4>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    merge into acct a 
+         using subs b on (a.msid=b.msid)
+       when MATCHED then
+            update set a.areacode=b.areacode
+            where b.ms_type=0    --可以根据条件更新
+            delete where (b.ms_type!=0);   --可以删除
+       when NOT MATCHED then
+            inert(msid,bill_month,areacode)     --根据条件插入
+            values(b.msid,&#39;200702&#39;,b.areacode)
+            where b.ms_type=0   ;
+</code></pre></div>
+<h3>oracle 表空间查询</h3>
+
+<ul>
+<li><p>db2统计所有节点表空间使用率</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">select substr(TABLESPACE_NAME,1,20) as TBSPC_NAME,
+     bigint(TOTAL_PAGES * PAGE_SIZE)/1024/1024 as &quot;TOTAL(MB)&quot;, 
+     used_pages*PAGE_SIZE/1024/1024 as &quot;USED(MB)&quot;,   
+     free_pages*PAGE_SIZE/1024/1024 as &quot;FREE(MB)&quot;
+from table(snapshot_tbs_cfg(&#39;DB_NAME&#39;, -2)) as snapshot_tbs_cfg 
+</code></pre></div></li>
+<li><p>db2查看表空间使用率</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">select substr(tbsp_name,1,20) as TABLESPACE_NAME,
+    substr(tbsp_content_type,1,10) as TABLESPACE_TYPE,
+    tbsp_page_size AS PAGE_SIZE ,
+    sum(tbsp_total_size_kb)/1024 as TOTAL_MB,
+    sum(tbsp_used_size_kb)/1024 as USED_MB,
+    sum(tbsp_free_size_kb)/1024 as FREE_MB
+from SYSIBMADM.TBSP_UTILIZATION 
+group by tbsp_name,tbsp_content_type,tbsp_page_size
+</code></pre></div></li>
+<li><p>oracle 查看表空间状态</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">SELECT UPPER(F.TABLESPACE_NAME) &quot;表空间名&quot;,  
+        D.TOT_GROOTTE_MB &quot;表空间大小(M)&quot;,  
+        D.TOT_GROOTTE_MB - F.TOTAL_BYTES &quot;已使用空间(M)&quot;,  
+        TO_CHAR(ROUND((D.TOT_GROOTTE_MB - F.TOTAL_BYTES) / D.TOT_GROOTTE_MB * 100,2),&#39;990.99&#39;) &quot;使用比&quot;,  
+        F.TOTAL_BYTES &quot;空闲空间(M)&quot;,  
+        F.MAX_BYTES &quot;最大块(M)&quot; 
+FROM (SELECT TABLESPACE_NAME,  
+    ROUND(SUM(BYTES) / (1024 * 1024), 2) TOTAL_BYTES,  
+    ROUND(MAX(BYTES) / (1024 * 1024), 2) MAX_BYTES  
+    FROM SYS.DBA_FREE_SPACE  
+GROUP BY TABLESPACE_NAME) F,  
+    (SELECT DD.TABLESPACE_NAME,  
+    ROUND(SUM(DD.BYTES) / (1024 * 1024), 2) TOT_GROOTTE_MB  
+    FROM SYS.DBA_DATA_FILES DD  
+    GROUP BY DD.TABLESPACE_NAME) D  
+    WHERE D.TABLESPACE_NAME = F.TABLESPACE_NAME  
+    ORDER BY 4 DESC;
+</code></pre></div></li>
+<li><p>oracle 分组函数</p>
+
+<ol>
+<li>rollup(A,B,C) &lt;=&gt; 先对A,B,C分组汇总,然后对A,B分组汇总然后对A进行汇总.然后对全体进行分组.然后将结果集合并</li>
+<li>cube(A,B,C) &lt;=&gt;先对A,B,C分组.然后对(A,B),(A,C)(A),(B,C),(B),(C)进行分组.然后对全体进行分组.然后将结果集合并</li>
+<li>grouping sets 按指定序列合计</li>
+</ol></li>
+<li><p>oracle 字段在数字区间之间的判断</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">select decode(sign(:x-30)*(sign(:x-60)+2),1,&#39;Y&#39;,2,&#39;Y&#39;,&#39;N&#39;) from dual; --30&lt;x&lt;=60
+select decode((sign(:x-30)+1)*(sign(:x-60)-1),0,&#39;N&#39;,&#39;Y&#39;) from dual; --30&lt;=x&lt;=60
+select decode((sign(:x-30)+1)*sign(:x-60),0,&#39;N&#39;,1,&#39;N&#39;,&#39;Y&#39;) from dual; --30&lt;=x&lt;60
+select decode((sign(:x-30)+1)*(sign(:x-60)-1),0,&#39;N&#39;,&#39;Y&#39;) from dual; --30&lt;=x&lt;=6
+</code></pre></div></li>
+<li><p>统计可能所有时间段之间的交集</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">select a.SDate,min(b.EDate) as EDate
+from
+    (select SDate from @t t where not exists(select 1 from @t where SDate&lt;t.SDate and EDate&gt;=t.SDate)) a,
+    (select EDate from @t t where not exists(select 1 from @t where SDate&lt;=t.EDate and EDate&gt;t.EDate)) b
+where
+    a.SDate&lt;=b.EDate
+group by
+    a.SDate--统计所有区间包含的不重复天数select
+    sum(n.Date) as Days
+    from
+        (select
+             datediff(dd,a.SDate,min(b.EDate)+1) as Date
+         from
+             (select SDate from @t t where not exists(select 1 from @t where SDate&lt;t.SDate and EDate&gt;=t.SDate)) a,
+             (select EDate from @t t where not exists(select 1 from @t where SDate&lt;=t.EDate and EDate&gt;t.EDate)) b
+         where
+             a.SDate&lt;=b.EDate
+         group by
+             a.SDate) n
+</code></pre></div></li>
+</ul>
+
+    </div>
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#database-ref">
+    		database <span>1</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon glyphicon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#database-ref">database <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#oracle-ref">oracle <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#数据库-ref">数据库 <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    
+  
+    <hr>
+    <ul class="pagination">
+    
+      <li class="prev"><a href="/jquery/2015/04/11/Jquery%20%E6%8A%80%E5%B7%A7" title="Jquery 技巧">&laquo; Previous</a></li>
+    
+      <li><a href="/archive.html">Archive</a></li>
+    
+      <li class="next"><a href="/thought/2015/04/11/%E7%B3%BB%E7%BB%9F%E9%97%B4%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A7%84%E8%8C%83" title="系统间接口协议的规范">Next &raquo;</a></li>
+    
+    </ul>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_developer = 1;
+    var disqus_shortname = 'holysky5'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p>&copy; 2015 holysky5
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </div>
+    </div>
+
+    
+
+
+
+
+    <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/assets/themes/bootstrap-3/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
