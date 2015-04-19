@@ -5,8 +5,8 @@
         <description>Holysky`s Blog - holysky5</description>
         <link>http://holysky5.github.io</link>
         <link>http://holysky5.github.io</link>
-        <lastBuildDate>2015-04-11T22:32:30+08:00</lastBuildDate>
-        <pubDate>2015-04-11T22:32:30+08:00</pubDate>
+        <lastBuildDate>2015-04-11T23:44:52+08:00</lastBuildDate>
+        <pubDate>2015-04-11T23:44:52+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -36,6 +36,183 @@
 </description>
                 <link>http://holysky5.github.io/thought/2015/04/11/%E7%B3%BB%E7%BB%9F%E9%97%B4%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A7%84%E8%8C%83</link>
                 <guid>http://holysky5.github.io/thought/2015/04/11/系统间接口协议的规范</guid>
+                <pubDate>2015-04-11T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Maven的一些使用</title>
+                <description>&lt;h4&gt;maven技巧&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;maven中的可将很多依赖用pom形式写成功公共的然后将此pom加载进本地仓库供其他项目依赖.此方可显著减少pom体积.所以平时可以将一些常用的apache jar包放入自己的仓库内减少重复.&lt;/li&gt;
+&lt;li&gt;maven 中的内置可用属性&lt;a href=&quot;http://docs.codehaus.org/display/MAVENUSER/MavenPropertiesGuide&quot;&gt;maven内置属性&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用UTF-8编译源代码,设置pom的propertiy 
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用maven profile中的属性类对项目resources中的对应属性值进行过滤&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;maven使用时间戳属性&lt;br&gt;
+    &lt;timestamp&gt;${maven.build.timestamp}&lt;/timestamp&gt;
+    &lt;maven.build.timestamp.format&gt;yyyy-MM-dd HH:mm&lt;/maven.build.timestamp.format&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;maven profile的使用 构建测试环境和开发环境等等&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;resources&amp;gt;
+            &amp;lt;resource&amp;gt;
+               &amp;lt;directory&amp;gt;src/main/resources&amp;lt;/directory&amp;gt;
+               &amp;lt;filtering&amp;gt;true&amp;lt;/filtering&amp;gt;
+            &amp;lt;/resource&amp;gt;
+&amp;lt;/resources&amp;gt;
+&amp;lt;profiles&amp;gt;
+        &amp;lt;profile&amp;gt;
+            &amp;lt;id&amp;gt;develop&amp;lt;/id&amp;gt;
+            &amp;lt;build&amp;gt;
+                &amp;lt;filters&amp;gt;
+                    &amp;lt;filter&amp;gt;profile-test.properties&amp;lt;/filter&amp;gt;
+                &amp;lt;/filters&amp;gt;
+            &amp;lt;/build&amp;gt;
+        &amp;lt;/profile&amp;gt;
+        &amp;lt;!--测试环境--&amp;gt;
+        &amp;lt;profile&amp;gt;
+            &amp;lt;id&amp;gt;test&amp;lt;/id&amp;gt;
+            &amp;lt;activation&amp;gt;
+                &amp;lt;activeByDefault&amp;gt;true&amp;lt;/activeByDefault&amp;gt;
+            &amp;lt;/activation&amp;gt;
+            &amp;lt;build&amp;gt;
+                &amp;lt;filters&amp;gt;
+                    &amp;lt;filter&amp;gt;profile-test.properties&amp;lt;/filter&amp;gt;
+                &amp;lt;/filters&amp;gt;
+            &amp;lt;/build&amp;gt;
+        &amp;lt;/profile&amp;gt;
+         &amp;lt;!--生产环境--&amp;gt;
+        &amp;lt;profile&amp;gt;
+            &amp;lt;id&amp;gt;production&amp;lt;/id&amp;gt;
+             &amp;lt;build&amp;gt;
+                &amp;lt;filters&amp;gt;
+                    &amp;lt;filter&amp;gt;profile-production.properties&amp;lt;/filter&amp;gt;
+                &amp;lt;/filters&amp;gt;
+            &amp;lt;/build&amp;gt;
+        &amp;lt;/profile&amp;gt;
+&amp;lt;/profiles&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装jar 到本地仓库
+    install to repository&lt;br&gt;
+    mvn install:install-file -Dfile=xxx.jar -DgroupId=xxx -DartifactId=xxx -Dversion=xxx -&lt;br&gt;
+    Dpackaging=jar -DgeneratePom=true&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;忽略maven的测试(构建时使用参数)
+    -Dmaven.test.skip=true&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;maven常用插件&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;用于给maven添加src,resource ，test资源 等等的插件Build Helper Maven Plugin
+插件地址： &lt;a href=&quot;http://mojo.codehaus.org/build-helper-maven-plugin/usage.html&quot;&gt;http://mojo.codehaus.org/build-helper-maven-plugin/usage.html&lt;/a&gt;
+    &lt;plugin&gt;
+            &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+            &lt;artifactId&gt;build-helper-maven-plugin&lt;/artifactId&gt;
+            &lt;version&gt;1.9&lt;/version&gt;
+            &lt;executions&gt;
+              &lt;execution&gt;
+                &lt;id&gt;add-source&lt;/id&gt;
+                &lt;phase&gt;generate-sources&lt;/phase&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;add-source&lt;/goal&gt;
+                &lt;/goals&gt;
+                &lt;configuration&gt;
+                  &lt;sources&gt;
+                    &lt;source&gt;some directory&lt;/source&gt;
+                    ...
+                  &lt;/sources&gt;
+                &lt;/configuration&gt;
+              &lt;/execution&gt;
+            &lt;/executions&gt;
+     &lt;/plugin&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;tomcat远程部署插件
+插件地址： &lt;a href=&quot;http://blueram.iteye.com/blog/1924981&quot;&gt;http://blueram.iteye.com/blog/1924981&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;plugin&amp;gt;  
+       &amp;lt;groupId&amp;gt;org.apache.tomcat.maven&amp;lt;/groupId&amp;gt;  
+                &amp;lt;artifactId&amp;gt;tomcat7-maven-plugin&amp;lt;/artifactId&amp;gt;  
+                &amp;lt;version&amp;gt;2.1&amp;lt;/version&amp;gt;  
+                &amp;lt;configuration&amp;gt;  
+                &amp;lt;url&amp;gt;http://192.0.0.203:8080/manager/text&amp;lt;/url&amp;gt;  
+                &amp;lt;server&amp;gt;server203&amp;lt;/server&amp;gt;  
+                &amp;lt;path&amp;gt;/energy&amp;lt;/path&amp;gt;  
+                &amp;lt;/configuration&amp;gt;  
+&amp;lt;/plugin&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;maven ant 自动部署&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;plugins&amp;gt;
+            &amp;lt;plugin&amp;gt;
+                &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
+                &amp;lt;artifactId&amp;gt;maven-antrun-plugin&amp;lt;/artifactId&amp;gt;
+                &amp;lt;version&amp;gt;1.7&amp;lt;/version&amp;gt;
+                &amp;lt;goals&amp;gt;
+                    &amp;lt;goal&amp;gt;run&amp;lt;/goal&amp;gt;
+                &amp;lt;/goals&amp;gt;
+                &amp;lt;executions&amp;gt;
+                    &amp;lt;execution&amp;gt;
+                        &amp;lt;id&amp;gt;upload war&amp;lt;/id&amp;gt;
+                        &amp;lt;phase&amp;gt;install&amp;lt;/phase&amp;gt;
+                        &amp;lt;configuration&amp;gt;
+                            &amp;lt;tasks&amp;gt;
+                                &amp;lt;!--&amp;lt;ftp server=&amp;quot;${host}&amp;quot; userid=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot;--&amp;gt;
+                                     &amp;lt;!--remotedir=&amp;quot;${upload_home}&amp;quot;&amp;gt;--&amp;gt;
+                                    &amp;lt;!--&amp;lt;fileset file=&amp;quot;${project.build.directory}/${project.build.finalName}.war&amp;quot; /&amp;gt;--&amp;gt;
+                                &amp;lt;!--&amp;lt;/ftp&amp;gt;--&amp;gt;
+                                  &amp;lt;scp file=&amp;quot;${project.build.directory}/${project.build.finalName}.war&amp;quot;
+                                     todir=&amp;quot;${user}@${host}:${upload_home}&amp;quot;
+                                     password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot; failonerror=&amp;quot;false&amp;quot;
+                                        /&amp;gt;
+                                &amp;lt;sshexec command=&amp;quot;sh ${tomcat_home}/bin/shutdown.sh&amp;quot;  host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;rm -rf ${tomcat_home}/webapps/*&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;rm -rf ${tomcat_home}/temp/*&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;rm -rf ${tomcat_home}/logs/*&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;rm -rf ${upload_home}/${project.build.finalName}/*&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;unzip -o ${upload_home}/${project.build.finalName}.war -d ${upload_home}/${project.build.finalName}/&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                                &amp;lt;sshexec  command=&amp;quot;sh ${tomcat_home}/bin/startup.sh&amp;quot; host=&amp;quot;${host}&amp;quot; username=&amp;quot;${user}&amp;quot; password=&amp;quot;${password}&amp;quot; trust=&amp;quot;true&amp;quot;/&amp;gt;
+                            &amp;lt;/tasks&amp;gt;
+                        &amp;lt;/configuration&amp;gt;
+                        &amp;lt;goals&amp;gt;
+                            &amp;lt;goal&amp;gt;run&amp;lt;/goal&amp;gt;
+                        &amp;lt;/goals&amp;gt;
+                    &amp;lt;/execution&amp;gt;
+                &amp;lt;/executions&amp;gt;
+                &amp;lt;dependencies&amp;gt;
+                    &amp;lt;dependency&amp;gt;
+                        &amp;lt;groupId&amp;gt;commons-net&amp;lt;/groupId&amp;gt;
+                        &amp;lt;artifactId&amp;gt;commons-net&amp;lt;/artifactId&amp;gt;
+                        &amp;lt;version&amp;gt;1.4.1&amp;lt;/version&amp;gt;
+                    &amp;lt;/dependency&amp;gt;
+                    &amp;lt;dependency&amp;gt;
+                        &amp;lt;groupId&amp;gt;ant&amp;lt;/groupId&amp;gt;
+                        &amp;lt;artifactId&amp;gt;ant-commons-net&amp;lt;/artifactId&amp;gt;
+                        &amp;lt;version&amp;gt;1.6.5&amp;lt;/version&amp;gt;
+                    &amp;lt;/dependency&amp;gt;
+                    &amp;lt;dependency&amp;gt;
+                        &amp;lt;groupId&amp;gt;ant&amp;lt;/groupId&amp;gt;
+                        &amp;lt;artifactId&amp;gt;ant-jsch&amp;lt;/artifactId&amp;gt;
+                        &amp;lt;version&amp;gt;1.6.5&amp;lt;/version&amp;gt;
+                    &amp;lt;/dependency&amp;gt;
+                    &amp;lt;dependency&amp;gt;
+                        &amp;lt;groupId&amp;gt;com.jcraft&amp;lt;/groupId&amp;gt;
+                        &amp;lt;artifactId&amp;gt;jsch&amp;lt;/artifactId&amp;gt;
+                        &amp;lt;version&amp;gt;0.1.51&amp;lt;/version&amp;gt;
+                    &amp;lt;/dependency&amp;gt;
+                &amp;lt;/dependencies&amp;gt;
+&amp;lt;/plugin&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;使用maven构建servlet3工程&lt;/h4&gt;
+
+&lt;ol&gt;
+&lt;li&gt;git clone &lt;a href=&quot;https://github.com/maciejwalkowiak/servlet3-maven-archetype.git&quot;&gt;https://github.com/maciejwalkowiak/servlet3-maven-archetype.git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;mvn install &lt;/li&gt;
+&lt;li&gt;mvn archetype:generate \
+-DarchetypeGroupId=xxx \
+-DarchetypeArtifactId=servlet3-webapp-archetype \
+-DarchetypeVersion=1.0&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+                <link>http://holysky5.github.io/java/2015/04/11/maven%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8</link>
+                <guid>http://holysky5.github.io/java/2015/04/11/maven的一些使用</guid>
                 <pubDate>2015-04-11T00:00:00+08:00</pubDate>
         </item>
 
